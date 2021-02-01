@@ -3,11 +3,9 @@ package info.nightscout.androidaps.plugins.source
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.google.gson.Gson
 import dagger.android.HasAndroidInjector
 import info.nightscout.androidaps.Config
 import info.nightscout.androidaps.Constants
@@ -94,13 +92,12 @@ class DexcomPlugin @Inject constructor(
 
         override fun doWork(): Result {
             if (!dexcomPlugin.isEnabled(PluginType.BGSOURCE)) return Result.failure()
-            val action = inputData.getString("action")
-            val bundle = Gson().fromJson(inputData.getString("data"), Bundle::class.java)
+            val json = JSONObject(inputData.getString("data"))
             try {
-                val sensorType = bundle.getString("sensorType") ?: ""
-                val glucoseValues = bundle.getBundle("glucoseValues") ?: return Result.failure()
-                for (i in 0 until glucoseValues.size()) {
-                    glucoseValues.getBundle(i.toString())?.let { glucoseValue ->
+                val sensorType = json.getString("sensorType") ?: ""
+                val glucoseValues = json.getJSONObject("glucoseValues") ?: return Result.failure()
+                for (i in json.keys()) {
+                    glucoseValues.getJSONObject(i)?.let { glucoseValue ->
                         val bgReading = BgReading()
                         bgReading.value = glucoseValue.getInt("glucoseValue").toDouble()
                         bgReading.direction = glucoseValue.getString("trendArrow")
@@ -116,9 +113,9 @@ class DexcomPlugin @Inject constructor(
                         }
                     }
                 }
-                bundle.getBundle("meters")?.let { meters ->
-                    for (i in 0 until meters.size()) {
-                        val meter = meters.getBundle(i.toString())
+                json.getJSONObject("meters")?.let { meters ->
+                    for (i in meters.keys()) {
+                        val meter = meters.getJSONObject(i)
                         meter?.let {
                             val timestamp = it.getLong("timestamp") * 1000
                             val now = DateUtil.now()
@@ -143,25 +140,23 @@ class DexcomPlugin @Inject constructor(
                         }
                     }
                 }
-                if (sp.getBoolean(R.string.key_dexcom_lognssensorchange, false) && bundle.containsKey("sensorInsertionTime")) {
-                    bundle.let {
-                        val sensorInsertionTime = it.getLong("sensorInsertionTime") * 1000
-                        val now = DateUtil.now()
-                        if (sensorInsertionTime > now - T.months(1).msecs() && sensorInsertionTime < now)
-                            if (MainApp.getDbHelper().getCareportalEventFromTimestamp(sensorInsertionTime) == null) {
-                                val jsonObject = JSONObject()
-                                jsonObject.put("enteredBy", "AndroidAPS-Dexcom$sensorType")
-                                jsonObject.put("created_at", DateUtil.toISOString(sensorInsertionTime))
-                                jsonObject.put("eventType", CareportalEvent.SENSORCHANGE)
-                                val careportalEvent = CareportalEvent(injector)
-                                careportalEvent.date = sensorInsertionTime
-                                careportalEvent.source = Source.USER
-                                careportalEvent.eventType = CareportalEvent.SENSORCHANGE
-                                careportalEvent.json = jsonObject.toString()
-                                MainApp.getDbHelper().createOrUpdate(careportalEvent)
-                                nsUpload.uploadCareportalEntryToNS(jsonObject)
-                            }
-                    }
+                if (sp.getBoolean(R.string.key_dexcom_lognssensorchange, false) && json.has("sensorInsertionTime")) {
+                    val sensorInsertionTime = json.getLong("sensorInsertionTime") * 1000
+                    val now = DateUtil.now()
+                    if (sensorInsertionTime > now - T.months(1).msecs() && sensorInsertionTime < now)
+                        if (MainApp.getDbHelper().getCareportalEventFromTimestamp(sensorInsertionTime) == null) {
+                            val jsonObject = JSONObject()
+                            jsonObject.put("enteredBy", "AndroidAPS-Dexcom$sensorType")
+                            jsonObject.put("created_at", DateUtil.toISOString(sensorInsertionTime))
+                            jsonObject.put("eventType", CareportalEvent.SENSORCHANGE)
+                            val careportalEvent = CareportalEvent(injector)
+                            careportalEvent.date = sensorInsertionTime
+                            careportalEvent.source = Source.USER
+                            careportalEvent.eventType = CareportalEvent.SENSORCHANGE
+                            careportalEvent.json = jsonObject.toString()
+                            MainApp.getDbHelper().createOrUpdate(careportalEvent)
+                            nsUpload.uploadCareportalEntryToNS(jsonObject)
+                        }
                 }
             } catch (e: Exception) {
                 aapsLogger.error("Error while processing intent from Dexcom App", e)

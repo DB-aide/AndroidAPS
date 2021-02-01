@@ -1,5 +1,6 @@
 package info.nightscout.androidaps.utils.extensions
 
+import android.os.Bundle
 import androidx.annotation.StringRes
 import info.nightscout.androidaps.utils.resources.ResourceHelper
 import info.nightscout.androidaps.utils.sharedPreferences.SP
@@ -45,4 +46,20 @@ fun JSONObject.storeBoolean(@StringRes key: Int, sp: SP, resourceHelper: Resourc
     return this
 }
 
-
+fun JSONObject.fromBundle(bundle: Bundle): JSONObject {
+    val iterator: Iterator<*> = bundle.keySet().iterator()
+    while (iterator.hasNext()) {
+        val key = iterator.next() as String
+        when (val obj = bundle[key]) {
+            is String -> put(key, obj)
+            is Int -> put(key, obj)
+            is Long -> put(key, obj)
+            is Double -> put(key, obj)
+            is Float -> put(key, obj)
+            is Boolean -> put(key, obj)
+            is Bundle -> put(key, fromBundle(obj))
+            else -> throw (IllegalStateException("Unsupported format"))
+        }
+    }
+    return this
+}
