@@ -22,15 +22,15 @@ object SMBDefaults {
     // const val remainingCarbsFraction = 1.0 // fraction of carbs we'll assume will absorb over 4h if we don't yet see carb absorption
 
     // USED IN DETERMINE_BASAL
-    const val low_temptarget_lowers_sensitivity = false // lower sensitivity for temptargets <= 99.
-    const val high_temptarget_raises_sensitivity = false // raise sensitivity for temptargets >= 111.  synonym for exercise_mode
+    const val low_temptarget_lowers_sensitivity = true // lower sensitivity for temptargets <= 99.
+    const val high_temptarget_raises_sensitivity = true // raise sensitivity for temptargets >= 111.  synonym for exercise_mode
 
     const val sensitivity_raises_target = true // raise BG target when autosens detects sensitivity
-    const val resistance_lowers_target = false // lower BG target when autosens detects resistance
-    const val adv_target_adjustments = false // lower target automatically when BG and eventualBG are high
+    const val resistance_lowers_target = true // lower BG target when autosens detects resistance
+    const val adv_target_adjustments = true // lower target automatically when BG and eventualBG are high
     const val exercise_mode =
-        false // when true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. This majorly changes the behavior of high temp targets from before. synonym for high_temptarget_raises_sensitivity
-    const val half_basal_exercise_target = 160 // when temptarget is 160 mg/dL *and* exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%)
+        true // when true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. This majorly changes the behavior of high temp targets from before. synonym for high_temptarget_raises_sensitivity
+    const val half_basal_exercise_target = 140 // when temptarget is 160 mg/dL *and* exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%)
 
     // create maxCOB and default it to 120 because that's the most a typical body can absorb over 4 hours.
     // (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120.
@@ -40,8 +40,8 @@ object SMBDefaults {
     //public final static boolean skip_neutral_temps = true; // ***** default false in oref1 ***** if true, don't set neutral temps
     // un-suspend_if_no_temp:false // if true, pump will un-suspend after a zero temp finishes
     // bolussnooze_dia_divisor:2 // bolus snooze decays after 1/2 of DIA
-    const val min_5m_carbimpact = 8.0 // mg/dL per 5m (8 mg/dL/5m corresponds to 24g/hr at a CSF of 4 mg/dL/g (x/5*60/4))
-    const val remainingCarbsCap = 90 // max carbs we'll assume will absorb over 4h if we don't yet see carb absorption
+    const val min_5m_carbimpact = 2.5 // mg/dL per 5m (8 mg/dL/5m corresponds to 24g/hr at a CSF of 4 mg/dL/g (x/5*60/4))
+    const val remainingCarbsCap = 180 // max carbs we'll assume will absorb over 4h if we don't yet see carb absorption
 
     // WARNING: use SMB with caution: it can and will automatically bolus up to max_iob worth of extra insulin
     // enableUAM:true // enable detection of unannounced meal carb absorption
@@ -58,8 +58,8 @@ object SMBDefaults {
     //public final static boolean enableSMB_after_carbs = false; // enable supermicrobolus for 6h after carbs, even with 0 COB
     //public final static boolean allowSMB_with_high_temptarget = false; // allow supermicrobolus (if otherwise enabled) even with high temp targets
     const val SMBInterval = 3 // minimum interval between SMBs, in minutes. (limited between 1 and 10 min)
-    const val maxSMBBasalMinutes = 30 // maximum minutes of basal that can be delivered as a single SMB with uncovered COB
-    const val maxUAMSMBBasalMinutes = 30 // maximum minutes of basal that can be delivered as a single SMB when IOB exceeds COB
+    const val maxSMBBasalMinutes = 15 // maximum minutes of basal that can be delivered as a single SMB with uncovered COB
+    const val maxUAMSMBBasalMinutes = 15 // maximum minutes of basal that can be delivered as a single SMB when IOB exceeds COB
 
     // curve:"rapid-acting" // Supported curves: "bilinear", "rapid-acting" (Novolog, Novorapid, Humalog, Apidra) and "ultra-rapid" (Fiasp)
     // useCustomPeakTime:false // allows changing insulinPeakTime

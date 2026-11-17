@@ -344,7 +344,7 @@ enum class DoubleKey(
         key = "openapsama_smb_max_range_extension",
         defaultValue = 1.0,
         min = 1.0,
-        max = 5.0,
+        max = 6.0,
         title = KeysStrings.pref_title_smb_max_range_extension,
         summary = KeysStrings.openapsama_smb_max_range_extension_summary,
         defaultedBySM = true,

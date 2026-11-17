@@ -66,7 +66,7 @@ interface HardLimits {
         val MAX_BASAL = mapOf(
             AgeType.CHILD to 2.0,
             AgeType.TEENAGE to 5.0,
-            AgeType.ADULT to 10.0,
+            AgeType.ADULT to 11.0,
             AgeType.RESISTANT_ADULT to 12.0,
             AgeType.PREGNANT to 25.0
         )

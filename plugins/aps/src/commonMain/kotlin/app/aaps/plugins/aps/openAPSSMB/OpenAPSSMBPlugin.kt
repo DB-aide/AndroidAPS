@@ -380,12 +380,12 @@ open class OpenAPSSMBPlugin(
             target_bg = targetBg,
             carb_ratio = profile.getIc(),
             sens = profile.getIsfMgdl("OpenAPSSMBPlugin"),
-            autosens_adjust_targets = false, // not used
+            autosens_adjust_targets = true, // not used
             max_daily_safety_multiplier = preferences.get(DoubleKey.ApsMaxDailyMultiplier),
             current_basal_safety_multiplier = preferences.get(DoubleKey.ApsMaxCurrentBasalMultiplier),
             lgsThreshold = profileUtil.convertToMgdlDetect(preferences.get(UnitDoubleKey.ApsLgsThreshold)).toInt(),
-            high_temptarget_raises_sensitivity = false,
-            low_temptarget_lowers_sensitivity = false,
+            high_temptarget_raises_sensitivity = true,
+            low_temptarget_lowers_sensitivity = true,
             sensitivity_raises_target = preferences.get(BooleanKey.ApsSensitivityRaisesTarget),
             resistance_lowers_target = preferences.get(BooleanKey.ApsResistanceLowersTarget),
             adv_target_adjustments = SMBDefaults.adv_target_adjustments,
