@@ -20,7 +20,7 @@ enum class SourceSensor(val text: String, val aliases: Set<String> = emptySet())
         "Libre1",
         setOf("Other App", "Network libre", "BlueReader", "Transmiter PL", "Blucon", "Tomato", "Rfduino", "LimiTTer", "Bubble", "Atom", "Glimp")
     ),
-    LIBRE_2("Libre2", setOf("Libre2 Native")),
+    LIBRE_2("Libre2", setOf("Libre2 Native", "Libre 2", "Libre2 Direct", "Libre 2 Direct")),
     LIBRE_3("Libre3"),
     MEDTRUM_A6("Medtrum A6"),
     MEDTRUM_UNKNOWN("Medtrum", setOf("Medtrum Native")),

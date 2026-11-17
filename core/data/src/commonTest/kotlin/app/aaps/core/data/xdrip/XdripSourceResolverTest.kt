@@ -39,6 +39,8 @@ class XdripSourceResolverTest {
         assertEquals(SourceSensor.GLUPRO, XdripSourceResolver.fromNightscoutDevice("xDrip-GluPro"))
         assertEquals(SourceSensor.AIDEX, XdripSourceResolver.fromNightscoutDevice("xDrip-AidexReceiver"))
         assertEquals(SourceSensor.LIBRE_2, XdripSourceResolver.fromNightscoutDevice("xDrip-LibreReceiver"))
+        assertEquals(SourceSensor.LIBRE_2, XdripSourceResolver.fromNightscoutDevice("xDrip-Libre2Direct"))
+        assertEquals(SourceSensor.LIBRE_2, XdripSourceResolver.fromNightscoutDevice("xDrip-Libre2"))
         assertEquals(SourceSensor.LIBRE_1, XdripSourceResolver.fromNightscoutDevice("xDrip-LimiTTer"))
         assertEquals(SourceSensor.LIBRE_1, XdripSourceResolver.fromNightscoutDevice("xDrip-LibreWifi"))
     }

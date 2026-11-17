@@ -68,6 +68,8 @@ object XdripSourceResolver {
         "xdrip-glupro" to SourceSensor.GLUPRO,
         "xdrip-aidexreceiver" to SourceSensor.AIDEX,
         "xdrip-librereceiver" to SourceSensor.LIBRE_2,
+        "xdrip-libre2direct" to SourceSensor.LIBRE_2,
+        "xdrip-libre2" to SourceSensor.LIBRE_2,
         "xdrip-limitter" to SourceSensor.LIBRE_1,
         "xdrip-librewifi" to SourceSensor.LIBRE_1,
     )

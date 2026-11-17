@@ -30,6 +30,9 @@ class SourceSensorTest {
         assertEquals(SourceSensor.MM_UNKNOWN, SourceSensor.fromString("CareLink Follow"))
         assertEquals(SourceSensor.MEDTRUM_UNKNOWN, SourceSensor.fromString("Medtrum Native"))
         assertEquals(SourceSensor.LIBRE_2, SourceSensor.fromString("Libre2 Native"))
+        assertEquals(SourceSensor.LIBRE_2, SourceSensor.fromString("Libre 2"))
+        assertEquals(SourceSensor.LIBRE_2, SourceSensor.fromString("Libre2 Direct"))
+        assertEquals(SourceSensor.LIBRE_2, SourceSensor.fromString("Libre 2 Direct"))
     }
 
     @Test
