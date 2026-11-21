@@ -21,18 +21,18 @@ interface HardLimits {
         // check (OpenAPSSMBPlugin: Round.roundTo(getTargetLowMgdl(), 0.1) -> 180.2). A tighter top (180.0,
         // or even the raw 180.16) makes the loop clamp a valid 10.0 mmol low target and warn every run.
         // (The temp-target low path is checked UNROUNDED, so LIMIT_TEMP_MIN_BG only needs 180.16.)
-        val LIMIT_MIN_BG = 80.0..180.2
+        val LIMIT_MIN_BG = 70.0..180.2
         val LIMIT_MAX_BG = 90.0..200.0
-        val LIMIT_TARGET_BG = 80.0..200.0
+        val LIMIT_TARGET_BG = 70.0..162.14
 
         // Very Hard Limits Ranges for Temp Targets [mg/dL]
         // Top is 180.16 (= 10.0 mmol * 18.01559), not a flat 180.0. A user may pick 10.0 mmol as the
         // temp target — the highest value the range allows — and it converts to 180.16 mg/dL. With a
         // flat 180.0 the watch rejects that temp target and the loop clamps the bottom value to 180.00
         // and warns on every run.
-        val LIMIT_TEMP_MIN_BG = 72.0..180.16
-        val LIMIT_TEMP_MAX_BG = 72.0..270.0
-        val LIMIT_TEMP_TARGET_BG = 72.0..200.0
+        val LIMIT_TEMP_MIN_BG = 70.0..180.16
+        val LIMIT_TEMP_MAX_BG = 70.0..270.0
+        val LIMIT_TEMP_TARGET_BG = 70.0..162.14
         val LIMIT_DIA = mapOf(
             AgeType.CHILD to 5.0..9.0,
             AgeType.TEENAGE to 5.0..9.0,

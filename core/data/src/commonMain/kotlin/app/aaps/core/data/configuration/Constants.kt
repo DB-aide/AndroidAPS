@@ -78,8 +78,8 @@ object Constants {
     // as 180.16 mg/dL. This range gates the NS-sync import of temp targets (they are uploaded in
     // mg/dL), so a flat 180.0 would silently drop a synced 10.0 mmol temp target. Mirrors the
     // HardLimits.LIMIT_TEMP_MIN_BG top.
-    val TT_RANGE_MGDL = 72.0..180.16
-    val TT_RANGE_MMOL = 4.0..10.0
+    val TT_RANGE_MGDL = 70.0..162.14
+    val TT_RANGE_MMOL = 3.9..9.0
 
     // Temp target preset defaults (target in mg/dL, duration in minutes)
     const val DEFAULT_TT_EATING_SOON_TARGET = 90.0
